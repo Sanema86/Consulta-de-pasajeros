@@ -1,7 +1,7 @@
 
 workflows:
   android-apk:
-    name: Almagroup Monitor APK
+    name: Ch0f3r 
     max_build_duration: 60
     environment:
       java: 17
