@@ -19,9 +19,9 @@ $('date').value=localDate();
 function setDirection(n){direction=n;$('tab1').classList.toggle('active',n===1);$('tab2').classList.toggle('active',n===2);loadServices(false)}
 function setStatus(s){$('status').textContent=s}
 async function obtainToken(){
- const r=await fetch(PAGE,{credentials:'include',cache:'no-store'}); if(!r.ok)throw new Error('No se pudo abrir la página pública ('+r.status+')');
+ const r=await fetch(PAGE,{credentials:'include',cache:'no-store',referrer:PAGE}); if(!r.ok)throw new Error('No se pudo abrir la página pública ('+r.status+')');
  const html=await r.text();
- const patterns=[/token\s*[:=]\s*["']([^"']+)["']/i,/name=["']token["'][^>]*value=["']([^"']+)["']/i,/value=["']([^"']+)["'][^>]*name=["']token["']/i];
+ const patterns=[/token["'\s:=]+["']?([a-f0-9]{64})/i,/token\s*[:=]\s*["']([^"']+)["']/i,/name=["']token["'][^>]*value=["']([^"']+)["']/i,/value=["']([^"']+)["'][^>]*name=["']token["']/i];
  for(const p of patterns){const m=html.match(p);if(m&&m[1])return m[1]}
  const doc=new DOMParser().parseFromString(html,'text/html');
  const input=doc.querySelector('input[name="token"],input#token');if(input&&input.value)return input.value;
@@ -32,7 +32,7 @@ async function loadServices(manual){
  try{
   const token=await obtainToken();
   const payload={action:'buscar_servicios',a:'almagroup',cantidadPasajeros:1,destino:direction===1?2:1,fecha:date,origen:direction===1?1:2,paradaSubida:0,token};
-  const r=await fetch(API,{method:'POST',credentials:'include',cache:'no-store',headers:{'Content-Type':'application/json','Accept':'application/json','X-Requested-With':'XMLHttpRequest'},body:JSON.stringify(payload)});
+  const r=await fetch(API,{method:'POST',mode:'cors',credentials:'include',cache:'no-store',referrer:PAGE,headers:{'Content-Type':'application/json','Accept':'*/*'},body:JSON.stringify(payload)});
   if(!r.ok){const t=(await r.text().catch(()=>'')).replace(/<[^>]*>/g,' ').trim().slice(0,150);throw new Error('Micronauta respondió '+r.status+(t?': '+t:''));}
   const result=await r.json();if(!result.success||!Array.isArray(result.data))throw new Error(result.message||'Respuesta no válida');
   lastData=result.data;render(lastData,date);setStatus('Actualizado: '+new Date().toLocaleTimeString('es-AR',{hour:'2-digit',minute:'2-digit'})+' · '+lastData.length+' servicios');

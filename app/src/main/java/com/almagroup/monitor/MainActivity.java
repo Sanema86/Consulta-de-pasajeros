@@ -20,6 +20,7 @@ public class MainActivity extends Activity {
         web.setLayoutParams(new ViewGroup.LayoutParams(-1,-1));
         web.getSettings().setJavaScriptEnabled(true);
         web.getSettings().setDomStorageEnabled(true);
+        web.getSettings().setUserAgentString(web.getSettings().getUserAgentString().replace("; wv", ""));
         web.setWebViewClient(new WebViewClient());
         web.setWebChromeClient(new WebChromeClient());
         setContentView(web);
