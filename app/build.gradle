@@ -1,0 +1,13 @@
+plugins { id 'com.android.application' }
+
+android {
+    namespace 'com.almagroup.monitor'
+    compileSdk 35
+    defaultConfig {
+        applicationId 'com.almagroup.monitor'
+        minSdk 23
+        targetSdk 35
+        versionCode 1
+        versionName '0.1'
+    }
+}
