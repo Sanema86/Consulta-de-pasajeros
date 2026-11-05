@@ -13,6 +13,9 @@
 <script>
 const PAGE='https://micronauta.dnsalias.net/usuario/yaviene/resultados.php?a=almagroup';
 const API='https://micronauta.dnsalias.net/usuario/yaviene/cmd.php';
+// Versión web (GitHub Pages): consulta a través del Worker. En la app Android se consulta directo.
+const WORKER='https://almagroup-monitor.sanabriaemanuel86.workers.dev/';
+const viaWorker=location.hostname.endsWith('github.io');
 let direction=1, timer=null, lastData=[], fBy='', fVal='';
 try{fBy=localStorage.getItem('fby')||'';fVal=localStorage.getItem('fval')||''}catch(e){}
 const $=id=>document.getElementById(id);
@@ -32,9 +35,15 @@ async function obtainToken(){
 async function loadServices(manual){
  const date=$('date').value||localDate();setStatus('Consultando Micronauta…');
  try{
-  const token=await obtainToken();
-  const payload={action:'buscar_servicios',a:'almagroup',cantidadPasajeros:1,destino:direction===1?2:1,fecha:date,origen:direction===1?1:2,paradaSubida:0,token};
-  const r=await fetch(API,{method:'POST',mode:'cors',credentials:'include',cache:'no-store',referrer:PAGE,headers:{'Content-Type':'application/json','Accept':'*/*'},body:JSON.stringify(payload)});
+  const origen=direction===1?1:2,destino=direction===1?2:1;let r;
+  if(viaWorker){
+   if(WORKER.includes('TU-USUARIO'))throw new Error('Falta configurar la dirección del Worker en index.html');
+   r=await fetch(WORKER,{method:'POST',cache:'no-store',headers:{'Content-Type':'application/json'},body:JSON.stringify({fecha:date,origen,destino})});
+  }else{
+   const token=await obtainToken();
+   const payload={action:'buscar_servicios',a:'almagroup',cantidadPasajeros:1,destino,fecha:date,origen,paradaSubida:0,token};
+   r=await fetch(API,{method:'POST',mode:'cors',credentials:'include',cache:'no-store',referrer:PAGE,headers:{'Content-Type':'application/json','Accept':'*/*'},body:JSON.stringify(payload)});
+  }
   if(!r.ok){const t=(await r.text().catch(()=>'')).replace(/<[^>]*>/g,' ').trim().slice(0,150);throw new Error('Micronauta respondió '+r.status+(t?': '+t:''));}
   const result=await r.json();if(!result.success||!Array.isArray(result.data))throw new Error(result.message||'Respuesta no válida');
   lastData=result.data;render(lastData,date);setStatus('Actualizado: '+new Date().toLocaleTimeString('es-AR',{hour:'2-digit',minute:'2-digit'})+' · '+lastData.length+' servicios');
