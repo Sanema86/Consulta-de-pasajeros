@@ -1,4 +1,4 @@
-# Almagroup Monitor (prototipo Android)
+# Info para Choferes - CHOFER S.A (prototipo Android)
 
 Proyecto Android mínimo con interfaz WebView y pantalla compacta para consultar servicios de Almagroup.
 
