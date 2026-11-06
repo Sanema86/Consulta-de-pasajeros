@@ -14,8 +14,8 @@ public class MainActivity extends Activity {
     private WebView web;
     @Override public void onCreate(Bundle state) {
         super.onCreate(state);
-        getWindow().setStatusBarColor(Color.rgb(18,63,53));
-        getWindow().setNavigationBarColor(Color.rgb(18,63,53));
+        getWindow().setStatusBarColor(Color.rgb(66,75,224));
+        getWindow().setNavigationBarColor(Color.rgb(66,75,224));
         web = new WebView(this);
         web.setLayoutParams(new ViewGroup.LayoutParams(-1,-1));
         web.getSettings().setJavaScriptEnabled(true);

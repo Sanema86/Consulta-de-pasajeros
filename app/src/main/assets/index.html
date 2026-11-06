@@ -1,18 +1,21 @@
 <!doctype html>
-<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"><meta name="theme-color" content="#123f35"><title>Almagroup Servicios</title>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"><meta name="theme-color" content="#424BE0"><title>Info Serv. CHOFER S.A</title>
 <style>
-:root{font-family:Arial,sans-serif;color:#17231f;background:#f3f6f4}*{box-sizing:border-box}body{margin:0}.top{background:#424be0;color:white;padding:18px 16px 14px}.brand{font-size:20px;font-weight:700}.sub{font-size:12px;opacity:.8;margin-top:4px}.tabs{display:flex;background:#fff;padding:6px;gap:6px;position:sticky;top:0;z-index:2;box-shadow:0 2px 8px #0001}.tab{flex:1;border:0;border-radius:8px;padding:12px 6px;background:#e9efec;color:#315148;font-weight:700}.tab.active{background:#176b57;color:#fff}.tools{display:flex;align-items:center;gap:8px;padding:12px 14px}.tools input{flex:1;min-width:0;border:1px solid #ccd8d1;border-radius:8px;padding:10px;background:white;font-size:15px}.refresh{border:0;border-radius:8px;background:#176b57;color:white;padding:11px 14px;font-weight:700}.filter{display:flex;gap:8px;padding:0 14px 10px}.filter select,.filter input{border:1px solid #ccd8d1;border-radius:8px;padding:12px 10px;background:white;font-size:17px;min-width:0}.filter select{flex:1.2}.filter input{flex:1}.filter input:disabled{background:#eef2ef}.status{padding:0 15px 10px;color:#65756e;font-size:12px}.head,.service{display:grid;grid-template-columns:54px 58px 1fr 48px 48px;gap:5px;align-items:center;padding:10px 12px}.head{font-size:10px;text-transform:uppercase;color:#75847d;font-weight:700;border-bottom:1px solid #dce5df}.service{background:#fff;border-bottom:1px solid #edf1ee;font-size:13px}.time{font-size:15px;font-weight:700;color:#123f35}.svc{font-weight:700}.car{color:#596b63}.num{text-align:center;font-weight:700}.available{color:#176b57}.empty{text-align:center;padding:35px 20px;color:#75847d}.foot{text-align:center;padding:18px;color:#8a9891;font-size:11px}
+:root{font-family:Arial,sans-serif;color:#17231f;background:#f3f6f4}*{box-sizing:border-box}body{margin:0}.top{background:#424BE0;color:white;padding:18px 16px 14px}.brand{font-size:20px;font-weight:700}.sub{font-size:12px;opacity:.8;margin-top:4px}.tabs{display:flex;background:#fff;padding:6px;gap:6px;position:sticky;top:0;z-index:2;box-shadow:0 2px 8px #0001}.tab{flex:1;border:0;border-radius:8px;padding:12px 6px;background:#e8eaf9;color:#2f36a8;font-weight:700}.tab.active{background:#424BE0;color:#fff}.tools{display:flex;align-items:center;gap:8px;padding:12px 14px}.tools input{flex:1;min-width:0;border:1px solid #ccd8d1;border-radius:8px;padding:10px;background:white;font-size:15px}.refresh{border:0;border-radius:8px;background:#424BE0;color:white;padding:11px 14px;font-weight:700}.filter{display:flex;gap:8px;padding:0 14px 10px}.filter select,.filter input{border:1px solid #ccd8d1;border-radius:8px;padding:12px 10px;background:white;font-size:17px;min-width:0}.filter select{flex:1.2}.filter input{flex:1}.filter input:disabled{background:#eef2ef}.status{padding:0 15px 10px;color:#65756e;font-size:12px}.head,.service{display:grid;grid-template-columns:54px 58px 1fr 48px 48px;gap:5px;align-items:center;padding:10px 12px}.head{font-size:10px;text-transform:uppercase;color:#75847d;font-weight:700;border-bottom:1px solid #dce5df}.service{background:#fff;border-bottom:1px solid #edf1ee;font-size:13px}.time{font-size:15px;font-weight:700;color:#424BE0}.svc{font-weight:700}.car{color:#596b63}.num{text-align:center;font-weight:700}.available{color:#424BE0}.empty{text-align:center;padding:35px 20px;color:#75847d}.foot{text-align:center;padding:18px;color:#8a9891;font-size:11px}
 </style></head><body>
-<header class="top"><div class="brand">Info de pasajeros</div><div class="sub">Control de servicios · Capacidad 19 pasajeros</div></header>
+<header class="top"><div class="brand">Info para choferes</div><div class="sub">Control de servicios</div></header>
 <nav class="tabs"><button class="tab active" id="tab1" onclick="setDirection(1)">Paraná</button><button class="tab" id="tab2" onclick="setDirection(2)">Santa Fe</button></nav>
 <div class="tools"><input id="date" type="date"><button class="refresh" onclick="loadServices(true)">↻ Actualizar</button></div>
-<div class="filter"><select id="fby" aria-label="Filtrar por"><option value="">Filtrar por: Sin filtro</option><option value="car">Combi</option><option value="svc">Servicio</option></select><input id="fval" type="text" inputmode="numeric" placeholder="Número" disabled></div>
+<div class="filter"><select id="fby" aria-label="Filtrar por"><option value="">Filtrar por: sin filtro</option><option value="car">Combi</option><option value="svc">Servicio</option></select><input id="fval" type="text" inputmode="numeric" placeholder="Número" disabled></div>
 <div class="status" id="status">Preparando consulta…</div>
 <div class="head"><span>Salida</span><span>Servicio</span><span>Combi</span><span>Ocup.</span><span>Libres</span></div>
 <main id="list"><div class="empty">Conectando con Micronauta…</div></main><div class="foot">Actualización automática cada 5 minutos</div>
 <script>
 const PAGE='https://micronauta.dnsalias.net/usuario/yaviene/resultados.php?a=almagroup';
 const API='https://micronauta.dnsalias.net/usuario/yaviene/cmd.php';
+// Versión web (GitHub Pages): consulta a través del Worker. En la app Android se consulta directo.
+const WORKER='https://almagroup-monitor.sanabriaemanuel86.workers.dev/';
+const viaWorker=location.hostname.endsWith('github.io');
 let direction=1, timer=null, lastData=[], fBy='', fVal='';
 try{fBy=localStorage.getItem('fby')||'';fVal=localStorage.getItem('fval')||''}catch(e){}
 const $=id=>document.getElementById(id);
@@ -32,9 +35,15 @@ async function obtainToken(){
 async function loadServices(manual){
  const date=$('date').value||localDate();setStatus('Consultando Micronauta…');
  try{
-  const token=await obtainToken();
-  const payload={action:'buscar_servicios',a:'almagroup',cantidadPasajeros:1,destino:direction===1?2:1,fecha:date,origen:direction===1?1:2,paradaSubida:0,token};
-  const r=await fetch(API,{method:'POST',mode:'cors',credentials:'include',cache:'no-store',referrer:PAGE,headers:{'Content-Type':'application/json','Accept':'*/*'},body:JSON.stringify(payload)});
+  const origen=direction===1?1:2,destino=direction===1?2:1;let r;
+  if(viaWorker){
+   if(WORKER.includes('TU-USUARIO'))throw new Error('Falta configurar la dirección del Worker en index.html');
+   r=await fetch(WORKER,{method:'POST',cache:'no-store',headers:{'Content-Type':'application/json'},body:JSON.stringify({fecha:date,origen,destino})});
+  }else{
+   const token=await obtainToken();
+   const payload={action:'buscar_servicios',a:'almagroup',cantidadPasajeros:1,destino,fecha:date,origen,paradaSubida:0,token};
+   r=await fetch(API,{method:'POST',mode:'cors',credentials:'include',cache:'no-store',referrer:PAGE,headers:{'Content-Type':'application/json','Accept':'*/*'},body:JSON.stringify(payload)});
+  }
   if(!r.ok){const t=(await r.text().catch(()=>'')).replace(/<[^>]*>/g,' ').trim().slice(0,150);throw new Error('Micronauta respondió '+r.status+(t?': '+t:''));}
   const result=await r.json();if(!result.success||!Array.isArray(result.data))throw new Error(result.message||'Respuesta no válida');
   lastData=result.data;render(lastData,date);setStatus('Actualizado: '+new Date().toLocaleTimeString('es-AR',{hour:'2-digit',minute:'2-digit'})+' · '+lastData.length+' servicios');
